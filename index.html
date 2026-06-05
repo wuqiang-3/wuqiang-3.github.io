@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>吴强 · 软件项目经理 | 个人主页</title>
+<meta name="description" content="吴强 - 软件项目经理，11年经验，PMP认证，CRM/CDP领域专家，AI应用工程师">
+<style>
+  :root{
+    --bg:#070b18; --bg2:#0b1226; --card:rgba(18,26,48,.7);
+    --neon:#38e1ff; --neon2:#9b6bff; --neon3:#ff5cc8;
+    --text:#e8edff; --muted:#93a0c4; --line:rgba(120,150,255,.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.7; overflow-x:hidden;
+  }
+  /* 背景光晕 */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-2;
+    background:
+      radial-gradient(700px 500px at 12% 8%, rgba(56,225,255,.16), transparent 60%),
+      radial-gradient(650px 500px at 88% 22%, rgba(155,107,255,.18), transparent 60%),
+      radial-gradient(700px 600px at 50% 100%, rgba(255,92,200,.10), transparent 60%),
+      var(--bg);
+  }
+  body::after{
+    content:""; position:fixed; inset:0; z-index:-1; opacity:.4;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 75%);
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* 导航 */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+    background:rgba(7,11,24,.65);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-weight:800;font-size:19px;letter-spacing:1px;
+    background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;gap:26px;font-size:14px;color:var(--muted)}
+  .nav-links a{transition:.25s;position:relative}
+  .nav-links a:hover{color:var(--neon)}
+  @media(max-width:720px){.nav-links{display:none}}
+
+  /* Hero */
+  header{padding:90px 0 60px;text-align:center;position:relative}
+  .avatar{width:132px;height:132px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 26px;
+    padding:4px;background:var(--bg2);border:2px solid rgba(56,225,255,.55);
+    box-shadow:0 0 0 5px rgba(10,16,34,.55),0 0 42px rgba(56,225,255,.35),0 0 80px rgba(155,107,255,.22);
+    filter:grayscale(.1) contrast(1.05)}
+  @media(max-width:720px){.avatar{width:112px;height:112px}}
+  .badge{display:inline-block;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    font-size:13px;color:var(--neon);margin-bottom:22px;background:rgba(56,225,255,.06)}
+  h1{font-size:64px;font-weight:900;letter-spacing:4px;line-height:1.1;
+    background:linear-gradient(120deg,#fff 10%,var(--neon) 45%,var(--neon2) 80%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px rgba(56,225,255,.25)}
+  .role{font-size:22px;color:var(--text);margin-top:14px;font-weight:600}
+  .tagline{color:var(--muted);max-width:680px;margin:18px auto 0;font-size:16px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:28px 0 8px}
+  .chip{padding:7px 15px;border-radius:999px;font-size:13px;color:var(--text);
+    border:1px solid var(--line);background:var(--card)}
+  .chip b{color:var(--neon)}
+  .contact{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:24px;font-size:14px;color:var(--muted)}
+  .contact a{display:inline-flex;align-items:center;gap:7px;transition:.25s}
+  .contact a:hover{color:var(--neon)}
+  @media(max-width:720px){h1{font-size:42px;letter-spacing:2px}.role{font-size:18px}}
+
+  /* 数据条 */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:50px 0}
+  .stat{padding:22px 14px;text-align:center;border:1px solid var(--line);border-radius:16px;
+    background:var(--card);transition:.3s}
+  .stat:hover{transform:translateY(-4px);border-color:rgba(56,225,255,.5);box-shadow:0 0 30px rgba(56,225,255,.12)}
+  .stat .n{font-size:34px;font-weight:900;
+    background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .l{font-size:13px;color:var(--muted);margin-top:6px}
+  @media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.stat .n{font-size:28px}}
+
+  /* 区块 */
+  section{padding:54px 0}
+  .sec-title{font-size:14px;color:var(--neon);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+  .sec-h{font-size:30px;font-weight:800;margin-bottom:34px;position:relative;display:inline-block}
+  .sec-h::after{content:"";position:absolute;left:0;bottom:-10px;width:54px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg,var(--neon),var(--neon2))}
+
+  /* 卡片通用 */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;
+    transition:.3s;backdrop-filter:blur(6px)}
+  .card:hover{border-color:rgba(155,107,255,.45);box-shadow:0 10px 40px rgba(56,225,255,.10);transform:translateY(-3px)}
+
+  /* 优势网格 */
+  .grid{display:grid;gap:18px}
+  .grid.g2{grid-template-columns:repeat(2,1fr)}
+  .grid.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.grid.g2,.grid.g3{grid-template-columns:1fr}}
+  .feat .ico{font-size:24px;margin-bottom:10px}
+  .feat h3{font-size:17px;margin-bottom:8px;color:#fff}
+  .feat p{font-size:14px;color:var(--muted)}
+
+  /* 技能 */
+  .skill-block{margin-bottom:22px}
+  .skill-block h4{font-size:15px;color:var(--neon2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .tags{display:flex;flex-wrap:wrap;gap:10px}
+  .tag{padding:7px 14px;border-radius:10px;font-size:13px;color:var(--text);
+    border:1px solid var(--line);background:rgba(56,225,255,.04);transition:.25s}
+  .tag:hover{border-color:var(--neon);color:var(--neon);box-shadow:0 0 14px rgba(56,225,255,.2)}
+
+  /* 时间线 */
+  .timeline{position:relative;padding-left:28px}
+  .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(var(--neon),var(--neon2),transparent)}
+  .tl-item{position:relative;margin-bottom:26px}
+  .tl-item::before{content:"";position:absolute;left:-28px;top:7px;width:14px;height:14px;border-radius:50%;
+    background:var(--bg);border:3px solid var(--neon);box-shadow:0 0 12px var(--neon)}
+  .tl-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px}
+  .tl-co{font-size:18px;font-weight:700;color:#fff}
+  .tl-role{font-size:14px;color:var(--neon)}
+  .tl-date{font-size:13px;color:var(--muted);font-family:monospace}
+  .tl-item ul{list-style:none;margin-top:10px}
+  .tl-item li{font-size:14px;color:var(--muted);padding-left:18px;position:relative;margin-bottom:5px}
+  .tl-item li::before{content:"▸";position:absolute;left:0;color:var(--neon2)}
+  .tl-item li.win::before{content:"★";color:var(--neon3)}
+  .tl-item li.win{color:var(--text)}
+
+  /* 项目卡 */
+  .proj h3{font-size:18px;color:#fff;margin-bottom:4px}
+  .proj .meta{font-size:12px;color:var(--neon);font-family:monospace;margin-bottom:12px}
+  .proj p{font-size:14px;color:var(--muted);margin-bottom:14px}
+  .proj .kpis{display:flex;flex-wrap:wrap;gap:8px}
+  .kpi{font-size:12px;padding:5px 11px;border-radius:8px;color:var(--text);
+    background:linear-gradient(90deg,rgba(56,225,255,.12),rgba(155,107,255,.12));border:1px solid var(--line)}
+
+  /* 证书/教育 */
+  .pill{display:inline-block;padding:9px 18px;border-radius:12px;margin:6px 8px 6px 0;font-size:14px;
+    border:1px solid var(--line);background:var(--card)}
+  .pill b{color:var(--neon)}
+
+  footer{padding:50px 0 40px;text-align:center;border-top:1px solid var(--line);margin-top:30px}
+  footer .name{font-size:24px;font-weight:800;
+    background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  footer p{color:var(--muted);font-size:13px;margin-top:10px}
+
+  /* 滚动渐入 */
+  .reveal{opacity:0;transform:translateY(28px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.show{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="logo">WU QIANG</div>
+    <div class="nav-links">
+      <a href="#about">关于</a>
+      <a href="#skills">技能</a>
+      <a href="#exp">经历</a>
+      <a href="#proj">项目</a>
+      <a href="#edu">教育</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap">
+  <img class="avatar reveal" src="avatar.png" alt="吴强 照片">
+  <div class="badge reveal">● 求职意向：软件项目经理 · 期望城市 西安</div>
+  <h1 class="reveal">吴 强</h1>
+  <div class="role reveal">软件项目经理 · 交付管理</div>
+  <p class="tagline reveal">做了 11 年软件项目，其中 6 年专注电商 CRM / CDP 营销系统。技术出身、带过开发，也管过交付——既能和客户聊清需求，也能和工程师对齐方案。持 PMP 认证，现在正往 AI 应用方向走。</p>
+  <div class="chips reveal">
+    <span class="chip"><b>PMP</b> 项目管理认证</span>
+    <span class="chip"><b>AI</b> 人工智能应用工程师</span>
+    <span class="chip"><b>11年</b> 工作经验</span>
+    <span class="chip"><b>CRM/CDP</b> 6年深耕</span>
+    <span class="chip"><b>Java · Python</b> 技术底子</span>
+  </div>
+  <div class="contact reveal">
+    <a href="tel:16602936514">📱 16602936514</a>
+    <a href="mailto:290084878@qq.com">✉️ 290084878@qq.com</a>
+    <span>👤 男 · 34 岁</span>
+    <span>💰 期望 15-25K</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat reveal"><div class="n">11<span style="font-size:18px">年</span></div><div class="l">软件交付与项目管理</div></div>
+    <div class="stat reveal"><div class="n">9+</div><div class="l">服务行业头部客户</div></div>
+    <div class="stat reveal"><div class="n">99.99%</div><div class="l">高并发系统可用性</div></div>
+    <div class="stat reveal"><div class="n">60+</div><div class="l">落地旅程营销活动</div></div>
+  </div>
+</div>
+
+<!-- 关于 / 核心优势 -->
+<section id="about" class="wrap">
+  <div class="sec-title reveal">PROFILE</div>
+  <h2 class="sec-h reveal">核心优势</h2>
+  <div class="grid g3">
+    <div class="card feat reveal"><div class="ico">🎯</div><h3>全流程项目管理</h3><p>从立项、需求、蓝图设计到开发、上线、复盘，完整跑过多轮项目。习惯用 WBS 和里程碑把进度拆细，几个项目并行时也能把资源和节奏理顺。</p></div>
+    <div class="card feat reveal"><div class="ico">🛍️</div><h3>电商 CRM / CDP</h3><p>在这个领域做了 6 年，从需求分析、业务蓝图、文档输出，到多系统对接、外包协调和客户沟通都亲手抓过，服务过强生、百丽、安踏等一线品牌。</p></div>
+    <div class="card feat reveal"><div class="ico">🤖</div><h3>AI 工具实战</h3><p>懂大模型的基本原理，会写 Prompt、做 Skill。平时用扣子、WorkBuddy、Gemini 搭知识库、生成原型、自动化周报，把重复的活儿交给 AI。</p></div>
+    <div class="card feat reveal"><div class="ico">⚙️</div><h3>技术不外行</h3><p>写过 Java 和 Python，熟悉 SpringBoot / SpringCloud，MySQL、Redis、Kafka 也用得来。和开发对方案时能聊到实现细节，不只是传话。</p></div>
+    <div class="card feat reveal"><div class="ico">☁️</div><h3>云计算交付</h3><p>在华为云用户体验部做了 2 年交付管理，把需求变更、验收这些环节梳理成标准流程，团队的交付效率和质量也跟着稳了下来。</p></div>
+    <div class="card feat reveal"><div class="ico">🤝</div><h3>沟通与抗压</h3><p>学东西快，跟客户和团队都好沟通。能扛压、能出差，项目赶的时候顶得住，该汇报就汇报、该推进就推进。</p></div>
+  </div>
+</section>
+
+<!-- 技能 -->
+<section id="skills" class="wrap">
+  <div class="sec-title reveal">SKILLS</div>
+  <h2 class="sec-h reveal">核心技能</h2>
+  <div class="card reveal">
+    <div class="skill-block">
+      <h4>📋 项目管理</h4>
+      <div class="tags">
+        <span class="tag">PMP 体系</span><span class="tag">全生命周期管理</span><span class="tag">WBS / 里程碑</span>
+        <span class="tag">需求分析与蓝图</span><span class="tag">风险管理</span><span class="tag">外包管理</span>
+        <span class="tag">多项目并行</span><span class="tag">交付流程优化</span><span class="tag">客户关系维护</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h4>💻 技术栈</h4>
+      <div class="tags">
+        <span class="tag">Java</span><span class="tag">Python</span><span class="tag">SpringBoot</span><span class="tag">SpringCloud</span>
+        <span class="tag">MySQL</span><span class="tag">Oracle</span><span class="tag">Redis</span><span class="tag">Kafka</span><span class="tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <h4>🧠 AI 应用</h4>
+      <div class="tags">
+        <span class="tag">大模型原理</span><span class="tag">Prompt 优化</span><span class="tag">Skill 开发</span>
+        <span class="tag">扣子 Coze</span><span class="tag">WorkBuddy</span><span class="tag">悟空</span><span class="tag">Gemini</span>
+      </div>
+    </div>
+    <div class="skill-block" style="margin-bottom:0">
+      <h4>🛠️ 效率工具</h4>
+      <div class="tags">
+        <span class="tag">Xmind</span><span class="tag">飞书</span><span class="tag">钉钉</span><span class="tag">腾讯文档</span>
+        <span class="tag">Word / PPT / Excel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 工作经历 -->
+<section id="exp" class="wrap">
+  <div class="sec-title reveal">EXPERIENCE</div>
+  <h2 class="sec-h reveal">工作经历</h2>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-head"><span class="tl-co">厦门南讯股份有限公司</span><span class="tl-date">2026.04 - 至今</span></div>
+      <div class="tl-role">软件项目经理</div>
+      <ul>
+        <li>负责成都黑玩全渠道 CRM SaaS 项目交付，召开启动会并与品牌方高层达成项目目标共识</li>
+        <li>制定里程碑计划与 WBS，主导需求与技术调研、规划业务蓝图，输出需求规格说明书并完成确认</li>
+        <li>主导外部系统业务调研，规划多方系统集成方案与技术方案；以日报、周报同步进展与风险</li>
+        <li class="win">通过 WorkBuddy 搭建个人知识库快速提炼公司级产品知识；用 Gemini 生成原型图辅助澄清定制需求</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-head"><span class="tl-co">中软国际科技服务有限公司</span><span class="tl-date">2024.02 - 2026.04</span></div>
+      <div class="tl-role">项目经理 / 主管（华为云用户体验部）</div>
+      <ul>
+        <li>主导华为云用户体验部自规划转型及外部项目交付管理，优化需求变更、验收等专项交付流程</li>
+        <li>组织周例会识别风险、协调内外部资源推动问题闭环；负责客户 VOC 管理与现网问题响应</li>
+        <li class="win">累计成功交付 7 个专项项目，2025 年同步并行管理 4 个专项</li>
+        <li class="win">两次荣获部门"季度之星"，两次获外部客户表彰；用华为 AI 工具搭建周报自动生成与发送工作流</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-head"><span class="tl-co">杭州数云信息技术有限公司</span><span class="tl-date">2018.11 - 2024.02</span></div>
+      <div class="tl-role">技术经理 → 需求交付顾问 / 项目经理</div>
+      <ul>
+        <li>2018–2021 任技术经理，主导多个 CRM/CDP 项目方案对接、实施及二次开发</li>
+        <li>2021–2024 任交付顾问/项目经理，全面负责 CDP 项目启动、调研、部署、培训及客户关系维护</li>
+        <li class="win">主导 6 个中大型 KA 项目技术方案落地，组织 3 次内部技术分享</li>
+        <li class="win">服务强生、百丽、安踏、慕思、君乐宝、云南白药、爱慕、斯凯奇、可口可乐等头部客户</li>
+        <li class="win">荣获年度优秀员工，4 次获客户表扬信</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-head"><span class="tl-co">上海华腾软件系统有限公司</span><span class="tl-date">2018.03 - 2018.11</span></div>
+      <div class="tl-role">Java 开发</div>
+      <ul>
+        <li>参与甜橙金融平台保险业务系统开发，负责需求分析、方案设计及系统维护</li>
+        <li class="win">主导保险产品对接流程开发，实现从定制化开发向产品配置化交付转型，提升交付效率 40%</li>
+        <li>成功对接三套保险产品系统并完成全流程测试，保障项目顺利上线</li>
+      </ul>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-head"><span class="tl-co">北京兆信信息技术有限公司</span><span class="tl-date">2016.06 - 2018.03</span></div>
+      <div class="tl-role">Java 开发</div>
+      <ul>
+        <li>负责营销系统后端服务开发，独立完成核心功能模块编码与集成</li>
+        <li class="win">主导系统性能优化与代码重构，提升系统稳定性与运行效率约 30%</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 项目经历 -->
+<section id="proj" class="wrap">
+  <div class="sec-title reveal">PROJECTS</div>
+  <h2 class="sec-h reveal">重点项目</h2>
+  <div class="grid g2">
+    <div class="card proj reveal">
+      <h3>百丽 麒麟 CDP 项目</h3>
+      <div class="meta">交付顾问 / 项目经理 · 2023.06 - 2024.02</div>
+      <p>主导一期 5 个子品牌系统对接与数据治理，项目覆盖 22 个子品牌，整合微信小程序、企微导购、自有 CRM、CDP 及 BI 等多源异构系统，构建品牌维度全渠道会员画像。</p>
+      <div class="kpis"><span class="kpi">交付 5 套 CDP 系统</span><span class="kpi">对接 22 个品牌</span><span class="kpi">60+ 旅程营销活动</span><span class="kpi">5 套标签体系</span></div>
+    </div>
+    <div class="card proj reveal">
+      <h3>云南白药 麒麟 CDP 项目</h3>
+      <div class="meta">交付顾问 / 项目经理 · 2023.03 - 2023.06</div>
+      <p>统一接入 7 个事业部共 49 家天猫、京东、抖音、有赞店铺数据并对接客户 CDP；开展业务诊断，为 3 个事业部制定全渠道会员忠诚度体系规划。</p>
+      <div class="kpis"><span class="kpi">7 事业部 / 49 店铺</span><span class="kpi">15 品牌会员打通</span><span class="kpi">跨平台运营效率 +60%</span></div>
+    </div>
+    <div class="card proj reveal">
+      <h3>爱慕 麒麟 CDP 项目</h3>
+      <div class="meta">技术经理 · 2020.02 - 2020.07</div>
+      <p>负责会员中台与营销引擎能力建设，主导搭建全渠道会员中台，设计发券异常补发与流量削峰方案；事件营销场景模块被纳入公司标准化产品体系。</p>
+      <div class="kpis"><span class="kpi">单小时 10万+ 发券</span><span class="kpi">可用性 99.99%</span><span class="kpi">沉淀为标准产品</span></div>
+    </div>
+    <div class="card proj reveal">
+      <h3>斯凯奇 CRM 项目</h3>
+      <div class="meta">技术经理 · 2019.01 - 2020.01</div>
+      <p>主导与第三方技术对接、接口设计与交付计划；构建 CRM 卡券业务中台，实现券创建、发放、核销核心场景，与营销模块深度整合。</p>
+      <div class="kpis"><span class="kpi">卡券业务中台</span><span class="kpi">对接有赞 / 驿氪</span><span class="kpi">准实时营销响应</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 教育与证书 -->
+<section id="edu" class="wrap">
+  <div class="sec-title reveal">EDUCATION & CERTS</div>
+  <h2 class="sec-h reveal">教育与证书</h2>
+  <div class="grid g2">
+    <div class="card reveal">
+      <h3 style="color:#fff;font-size:18px;margin-bottom:6px">河北航空航天大学</h3>
+      <div class="meta" style="color:var(--neon);font-family:monospace;font-size:13px;margin-bottom:10px">本科 · 土木工程 · 2011 - 2015</div>
+      <p style="color:var(--muted);font-size:14px">在校期间学习态度认真，成绩全专业前 5%，荣获校级奖学金及校级三好学生荣誉称号。早期 BIM 工程数字化实践，为后续向云计算与 AI 领域转型奠定基础。</p>
+    </div>
+    <div class="card reveal">
+      <h3 style="color:#fff;font-size:18px;margin-bottom:14px">资格证书</h3>
+      <span class="pill"><b>PMP</b> 项目管理认证</span>
+      <span class="pill"><b>AI</b> 人工智能应用工程师</span>
+      <span class="pill">驾驶证 C1</span>
+      <span class="pill">驾驶证 D</span>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="name">吴 强</div>
+  <p>软件项目经理 · 11 年交付经验 · CRM/CDP 专家 · PMP & AI 应用工程师</p>
+  <p style="margin-top:14px">📱 16602936514 &nbsp;·&nbsp; ✉️ 290084878@qq.com &nbsp;·&nbsp; 📍 西安</p>
+</footer>
+
+<script>
+  // 滚动渐入
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    el.style.transitionDelay=(i%6*0.05)+'s';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
