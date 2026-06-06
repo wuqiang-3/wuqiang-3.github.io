@@ -8,9 +8,18 @@
 <style>
   :root{
     --bg:#08080d; --tile:rgba(255,255,255,.026); --tile-line:rgba(255,255,255,.08);
+    --chip:rgba(255,255,255,.03); --nav:rgba(8,8,13,.55); --ink:#0b0b12;
     --txt:#ececf1; --muted:#9a9ab0; --dim:#6b6b82;
     --i:#818cf8; --v:#a78bfa; --c:#22d3ee; --pink:#f472b6;
     --grad:linear-gradient(135deg,var(--i),var(--v) 45%,var(--c));
+    --blob1:rgba(129,140,248,.20); --blob2:rgba(34,211,238,.16); --blob3:rgba(167,139,250,.16);
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f7fb; --tile:rgba(20,22,40,.025); --tile-line:rgba(20,22,40,.10);
+    --chip:rgba(20,22,40,.04); --nav:rgba(246,247,251,.7); --ink:#fff;
+    --txt:#1b1c2a; --muted:#54566b; --dim:#8a8ca0;
+    --i:#6366f1; --v:#8b5cf6; --c:#0891b2;
+    --blob1:rgba(99,102,241,.12); --blob2:rgba(8,145,178,.10); --blob3:rgba(139,92,246,.10);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -19,9 +28,9 @@
   /* 柔和渐变光斑背景 */
   body::before{content:"";position:fixed;inset:0;z-index:-1;
     background:
-      radial-gradient(600px 600px at 10% -5%,rgba(129,140,248,.20),transparent 60%),
-      radial-gradient(620px 560px at 92% 8%,rgba(34,211,238,.16),transparent 60%),
-      radial-gradient(700px 700px at 50% 115%,rgba(167,139,250,.16),transparent 60%);
+      radial-gradient(600px 600px at 10% -5%,var(--blob1),transparent 60%),
+      radial-gradient(620px 560px at 92% 8%,var(--blob2),transparent 60%),
+      radial-gradient(700px 700px at 50% 115%,var(--blob3),transparent 60%);
     filter:saturate(1.05)}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
@@ -30,14 +39,35 @@
 
   /* 导航 */
   nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);
-    background:rgba(8,8,13,.55);border-bottom:1px solid var(--tile-line)}
+    background:var(--nav);border-bottom:1px solid var(--tile-line)}
   .nav-in{max-width:1120px;margin:0 auto;padding:15px 22px;display:flex;align-items:center;justify-content:space-between}
   .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.5px}
   .mono{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:14px;
-    color:#0b0b12;background:var(--grad)}
+    color:var(--ink);background:var(--grad)}
   .nav-links{display:flex;gap:24px;font-size:14px;color:var(--muted)}
   .nav-links a{transition:.2s}.nav-links a:hover{color:var(--txt)}
-  @media(max-width:720px){.nav-links{display:none}}
+  .nav-right{display:flex;align-items:center;gap:16px}
+  .theme-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--tile-line);background:var(--tile);
+    color:var(--txt);font-size:15px;cursor:pointer;display:grid;place-items:center;transition:.2s}
+  .theme-btn:hover{border-color:var(--i);transform:translateY(-1px)}
+  /* 汉堡按钮（移动端） */
+  .burger{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+    width:42px;height:42px;padding:0;border:1px solid var(--tile-line);background:var(--tile);
+    border-radius:11px;cursor:pointer;transition:.2s}
+  .burger:hover{border-color:var(--i)}
+  .burger span{display:block;width:18px;height:2px;border-radius:2px;background:var(--txt);transition:.28s cubic-bezier(.2,.7,.2,1)}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  /* 移动端下拉菜单 */
+  .mobile-menu{display:none;flex-direction:column;gap:2px;padding:6px 22px 16px;
+    border-top:1px solid var(--tile-line);background:var(--nav);backdrop-filter:blur(16px)}
+  .mobile-menu.open{display:flex;animation:menuIn .25s ease}
+  @keyframes menuIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .mobile-menu a{padding:13px 12px;border-radius:11px;color:var(--muted);font-size:15.5px;transition:.18s}
+  .mobile-menu a:hover,.mobile-menu a:active{background:var(--tile);color:var(--txt)}
+  @media(max-width:720px){.nav-links{display:none}.burger{display:flex}}
+  @media(min-width:721px){.mobile-menu{display:none!important}}
 
   /* 顶部状态 + 大标题 */
   .top{padding:64px 0 30px}
@@ -50,7 +80,7 @@
   .sub{margin-top:18px;font-size:clamp(15px,2vw,18px);color:var(--muted);max-width:640px}
   .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
   .btn{padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;transition:.25s;border:1px solid transparent}
-  .btn.p{background:var(--grad);color:#0b0b12}
+  .btn.p{background:var(--grad);color:var(--ink)}
   .btn.p:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(129,140,248,.3)}
   .btn.s{border-color:var(--tile-line);color:var(--txt);background:var(--tile)}
   .btn.s:hover{border-color:var(--i);color:var(--i)}
@@ -58,7 +88,7 @@
   /* Bento 网格 */
   .bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:150px;gap:16px;margin:30px 0 10px}
   .tile{background:var(--tile);border:1px solid var(--tile-line);border-radius:22px;padding:22px;
-    position:relative;overflow:hidden;transition:.3s;backdrop-filter:blur(4px)}
+    position:relative;overflow:hidden;transition:.3s;backdrop-filter:blur(4px);min-width:0}
   .tile:hover{transform:translateY(-3px);border-color:rgba(129,140,248,.45);
     box-shadow:0 14px 40px rgba(0,0,0,.35),0 0 0 1px rgba(129,140,248,.15)}
   .tile .label{margin-bottom:10px}
@@ -67,16 +97,25 @@
   .t-tech{grid-column:span 3;grid-row:span 2}.t-cert{grid-column:span 3;grid-row:span 2}
   .t-brand{grid-column:span 6;grid-row:span 1;display:flex;flex-direction:column;justify-content:center}
   .t-k1{grid-column:span 2}.t-k2{grid-column:span 2}.t-goal{grid-column:span 2}
+  /* 平板/中屏：保留 6 列网格、重设跨度，三个 KPI 各占 2 列恰好三等分，杜绝落单留白 */
   @media(max-width:860px){
-    .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px}
-    .t-about{grid-column:span 2;grid-row:span 2}
-    .t-tech,.t-cert{grid-column:span 2;grid-row:span 2}
-    .t-brand{grid-column:span 2}
-    .t-s1,.t-s2,.t-k1,.t-k2,.t-goal{grid-column:span 1}
+    .bento{grid-auto-rows:minmax(128px,auto)}
+    .t-about{grid-column:span 6;grid-row:auto}
+    .t-s1{grid-column:span 3}.t-s2{grid-column:span 3}
+    .t-tech{grid-column:span 6;grid-row:auto}
+    .t-cert{grid-column:span 6;grid-row:auto}
+    .t-brand{grid-column:span 6}
+    .t-k1{grid-column:span 2}.t-k2{grid-column:span 2}.t-goal{grid-column:span 2}
   }
-  @media(max-width:520px){.bento{grid-template-columns:1fr}
-    .t-about,.t-s1,.t-s2,.t-tech,.t-cert,.t-brand,.t-k1,.t-k2,.t-goal{grid-column:span 1}
-    .tile{grid-row:auto!important;height:auto;min-height:150px}}
+  /* 手机：两列紧凑，stat 卡改横向排布压缩留白，长内容卡满宽 */
+  @media(max-width:520px){
+    .bento{grid-template-columns:repeat(2,1fr);grid-auto-rows:minmax(98px,auto);gap:12px}
+    .t-about,.t-tech,.t-cert,.t-brand,.t-goal{grid-column:1 / -1}
+    .t-s1,.t-s2,.t-k1,.t-k2{grid-column:span 1}
+    .tile{padding:18px}
+    .stat-n{font-size:38px}
+    .stat-l{font-size:12.5px;margin-top:7px}
+  }
 
   /* about tile */
   .t-about .who{font-size:21px;font-weight:750;margin-bottom:6px}
@@ -86,8 +125,9 @@
   .t-about .meta a:hover{color:var(--c)}
 
   /* stat tiles */
-  .stat-n{font-size:46px;font-weight:850;letter-spacing:-1px;line-height:1;
+  .stat-n{font-size:46px;font-weight:850;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums;
     background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat-n .num{font-style:normal}
   .stat-n s{font-size:20px;text-decoration:none;-webkit-text-fill-color:var(--muted)}
   .stat-l{color:var(--muted);font-size:13.5px;margin-top:10px}
   .tile.center{display:flex;flex-direction:column;justify-content:center}
@@ -95,26 +135,27 @@
   /* tech / tags */
   .tags{display:flex;flex-wrap:wrap;gap:8px}
   .tag{font-size:12.5px;padding:6px 11px;border-radius:9px;color:var(--txt);
-    border:1px solid var(--tile-line);background:rgba(255,255,255,.03);transition:.2s}
+    border:1px solid var(--tile-line);background:var(--chip);transition:.2s}
   .tag:hover{border-color:var(--i);color:var(--i)}
   .cert-pill{display:flex;align-items:center;gap:11px;padding:12px 14px;border-radius:12px;margin-bottom:11px;
-    border:1px solid var(--tile-line);background:rgba(255,255,255,.03);font-size:14px;transition:.22s}
+    border:1px solid var(--tile-line);background:var(--chip);font-size:14px;transition:.22s}
   .cert-pill:last-child{margin-bottom:0}
   .cert-pill:hover{border-color:rgba(129,140,248,.45);transform:translateX(3px)}
   .cert-pill b{color:var(--v)}
-  .cert-pill .ic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:0 0 auto;background:var(--grad);color:#0b0b12;font-weight:800;font-size:13px}
+  .cert-pill .ic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:0 0 auto;background:var(--grad);color:var(--ink);font-weight:800;font-size:13px}
   /* 成长路径 */
   .path{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:14px}
   .path span{font-size:13px;padding:7px 12px;border-radius:9px;border:1px solid var(--tile-line);
-    background:rgba(255,255,255,.03);color:var(--muted)}
-  .path span.hl{background:var(--grad);color:#0b0b12;font-weight:700;border:none}
+    background:var(--chip);color:var(--muted)}
+  .path span.hl{background:var(--grad);color:var(--ink);font-weight:700;border:none}
   .path i{color:var(--dim);font-style:normal;font-size:13px}
 
   /* 品牌滚动 */
   .marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
   .marquee .track{display:flex;gap:34px;width:max-content;animation:scroll 26s linear infinite}
   .marquee:hover .track{animation-play-state:paused}
-  .marquee b{font-size:18px;font-weight:700;color:var(--muted);white-space:nowrap;transition:.2s}
+  .marquee b{font-size:18px;font-weight:700;color:var(--muted);white-space:nowrap;transition:.25s;cursor:default}
+  .marquee b:hover{color:var(--txt);text-shadow:0 0 20px rgba(129,140,248,.55)}
   @keyframes scroll{to{transform:translateX(-50%)}}
 
   /* 区块 */
@@ -157,14 +198,20 @@
   .edu .tile h3{font-size:17px;margin-bottom:4px}.edu .pm{font-family:ui-monospace,monospace;font-size:12px;color:var(--c);margin-bottom:10px}
   .edu p{font-size:13.5px;color:var(--muted)}
   .pill{display:inline-block;padding:8px 15px;border-radius:11px;margin:5px 7px 5px 0;font-size:13.5px;
-    border:1px solid var(--tile-line);background:rgba(255,255,255,.03)}.pill b{color:var(--i)}
+    border:1px solid var(--tile-line);background:var(--chip)}.pill b{color:var(--i)}
 
   footer{padding:46px 0 60px;text-align:center;border-top:1px solid var(--tile-line);margin-top:24px}
   footer .fn{font-size:22px;font-weight:800}
   footer p{color:var(--muted);font-size:13px;margin-top:9px}
+  .visits{margin-top:16px;font-size:12px;color:var(--dim);opacity:0;transition:.5s}
+  .visits.show{opacity:1}.visits b{color:var(--i)}
 
-  .reveal{opacity:0;transform:translateY(22px);transition:.65s cubic-bezier(.2,.7,.2,1)}
-  .reveal.show{opacity:1;transform:none}
+  /* 容错：仅当 JS 接管(body.js)时才隐藏；JS 失效则内容始终可见，绝不空白 */
+  body.js .reveal{opacity:0;transform:translateY(22px);transition:.65s cubic-bezier(.2,.7,.2,1)}
+  body.js .reveal.show{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    body.js .reveal{opacity:1;transform:none;transition:none}
+  }
 </style>
 </head>
 <body>
@@ -176,6 +223,13 @@
       <a href="#overview">概览</a><a href="#exp">经历</a><a href="#proj">项目</a><a href="#edu">教育</a>
       <a href="mailto:290084878@qq.com">联系</a>
     </div>
+    <button class="burger" id="burger" aria-label="打开菜单" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#overview">概览</a><a href="#exp">经历</a><a href="#proj">项目</a><a href="#edu">教育</a>
+    <a href="mailto:290084878@qq.com">联系</a>
   </div>
 </nav>
 
@@ -203,8 +257,8 @@
       </div>
     </div>
 
-    <div class="tile t-s1 center reveal"><div class="stat-n">11<s>年</s></div><div class="stat-l">软件研发与项目交付</div></div>
-    <div class="tile t-s2 center reveal"><div class="stat-n">6<s>年</s></div><div class="stat-l">电商 CRM / CDP 深耕</div></div>
+    <div class="tile t-s1 center reveal"><div class="stat-n"><span class="num" data-to="11">11</span><s>年</s></div><div class="stat-l">软件研发与项目交付</div></div>
+    <div class="tile t-s2 center reveal"><div class="stat-n"><span class="num" data-to="6">6</span><s>年</s></div><div class="stat-l">电商 CRM / CDP 深耕</div></div>
 
     <div class="tile t-tech reveal">
       <div class="label">Tech & AI</div>
@@ -230,9 +284,9 @@
       </div></div>
     </div>
 
-    <div class="tile t-k1 center reveal"><div class="stat-n">99.99<s>%</s></div><div class="stat-l">高并发系统可用性</div></div>
-    <div class="tile t-k2 center reveal"><div class="stat-n">60<s>+</s></div><div class="stat-l">落地旅程营销活动</div></div>
-    <div class="tile t-goal center reveal"><div class="stat-n">9<s>+</s></div><div class="stat-l">服务行业头部客户</div></div>
+    <div class="tile t-k1 center reveal"><div class="stat-n"><span class="num" data-to="99.99">99.99</span><s>%</s></div><div class="stat-l">高并发系统可用性</div></div>
+    <div class="tile t-k2 center reveal"><div class="stat-n"><span class="num" data-to="60">60</span><s>+</s></div><div class="stat-l">落地旅程营销活动</div></div>
+    <div class="tile t-goal center reveal"><div class="stat-n"><span class="num" data-to="9">9</span><s>+</s></div><div class="stat-l">服务行业头部客户</div></div>
   </div>
 </div>
 
@@ -334,8 +388,49 @@
 </footer>
 
 <script>
+  // 标记 JS 已接管——容错：CSS 仅在 body.js 下才隐藏 reveal/计数，JS 失效则全部正常显示
+  document.body.classList.add('js');
+
+  // 汉堡菜单开关
+  (function(){
+    const burger=document.getElementById('burger'), menu=document.getElementById('mobileMenu');
+    if(!burger||!menu) return;
+    const close=()=>{burger.classList.remove('open');menu.classList.remove('open');burger.setAttribute('aria-expanded','false');};
+    burger.addEventListener('click',()=>{
+      const open=!burger.classList.contains('open');
+      burger.classList.toggle('open',open);menu.classList.toggle('open',open);
+      burger.setAttribute('aria-expanded',String(open));
+    });
+    menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  })();
+
+  // 进场动画
+  const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})},{threshold:.1});
   document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%5*0.05)+'s';io.observe(el)});
+
+  // KPI 数字滚动递增（进入视口触发，仅一次）
+  const fmt=(v,dec)=>dec>0?v.toFixed(dec):String(Math.round(v));
+  function countUp(el){
+    const raw=el.dataset.to, to=parseFloat(raw), dec=(raw.split('.')[1]||'').length, dur=1100;
+    let start=null;
+    function step(ts){
+      if(start===null) start=ts;
+      const p=Math.min((ts-start)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=fmt(to*e,dec);
+      if(p<1) requestAnimationFrame(step); else el.textContent=fmt(to,dec);
+    }
+    requestAnimationFrame(step);
+  }
+  const nums=document.querySelectorAll('.num');
+  if(reduce){
+    nums.forEach(el=>{el.textContent=fmt(parseFloat(el.dataset.to),(el.dataset.to.split('.')[1]||'').length);});
+  }else{
+    nums.forEach(el=>{el.textContent='0';});
+    const nio=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){countUp(e.target);nio.unobserve(e.target)}})},{threshold:.4});
+    nums.forEach(el=>nio.observe(el));
+  }
 </script>
 </body>
 </html>
