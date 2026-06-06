@@ -213,19 +213,23 @@
     body.js .reveal{opacity:1;transform:none;transition:none}
   }
 </style>
+<script>/* 主题防闪烁：CSS 应用前先按上次选择设定，避免刷新闪屏 */(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 </head>
 <body>
 
 <nav>
   <div class="nav-in">
     <div class="brand"><span class="mono">WQ</span> 吴强</div>
-    <div class="nav-links">
-      <a href="#overview">概览</a><a href="#exp">经历</a><a href="#proj">项目</a><a href="#edu">教育</a>
-      <a href="mailto:290084878@qq.com">联系</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#overview">概览</a><a href="#exp">经历</a><a href="#proj">项目</a><a href="#edu">教育</a>
+        <a href="mailto:290084878@qq.com">联系</a>
+      </div>
+      <button class="theme-btn" id="themeBtn" aria-label="切换主题">☀️</button>
+      <button class="burger" id="burger" aria-label="打开菜单" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <button class="burger" id="burger" aria-label="打开菜单" aria-expanded="false" aria-controls="mobileMenu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="#overview">概览</a><a href="#exp">经历</a><a href="#proj">项目</a><a href="#edu">教育</a>
@@ -390,6 +394,24 @@
 <script>
   // 标记 JS 已接管——容错：CSS 仅在 body.js 下才隐藏 reveal/计数，JS 失效则全部正常显示
   document.body.classList.add('js');
+
+  // 主题切换（深 / 浅，记忆到 localStorage；图标显示“点击后会切换到的目标”）
+  (function(){
+    const btn=document.getElementById('themeBtn'); if(!btn) return;
+    const root=document.documentElement;
+    const apply=t=>{
+      root.setAttribute('data-theme',t);
+      btn.textContent=t==='light'?'🌙':'☀️';
+      btn.setAttribute('aria-label',t==='light'?'切换到深色模式':'切换到浅色模式');
+    };
+    let cur=localStorage.getItem('theme')||'dark';
+    apply(cur);
+    btn.addEventListener('click',()=>{
+      cur=cur==='light'?'dark':'light';
+      try{localStorage.setItem('theme',cur);}catch(e){}
+      apply(cur);
+    });
+  })();
 
   // 汉堡菜单开关
   (function(){
